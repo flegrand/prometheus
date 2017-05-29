@@ -9,10 +9,10 @@ services:
       - monitoring
     volumes:
       - prometheus:/prometheus
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./mysql:/etc/prometheus/mysql
-      - ./blackbox:/etc/prometheus/blackbox
-      - ./alerts:/etc/prometheus/alerts
+      - /root/git/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /root/git/prometheus/mysql:/etc/prometheus/mysql
+      - /root/git/prometheus/blackbox:/etc/prometheus/blackbox
+      - /root/git/prometheus/alerts:/etc/prometheus/alerts
     deploy:
       placement:
         constraints: [node.labels.node-role == infra]
