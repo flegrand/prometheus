@@ -1,0 +1,29 @@
+version: "3.1"
+
+services:
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    networks:
+      - monitoring
+    volumes:
+      - prometheus:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./mysql:/etc/prometheus/mysql
+      - ./blackbox:/etc/prometheus/blackbox
+      - ./alerts:/etc/prometheus/alerts
+    deploy:
+      placement:
+        constraints: [node.labels.node-role == infra]
+    labels:
+      container-type: "monitoring"
+    command: "-config.file=/etc/prometheus/prometheus.yml -alertmanager.url=http://alertmanager:9093"
+
+networks:
+    monitoring:
+      external:
+        name: monitoring
+
+volumes:
+    prometheus:
